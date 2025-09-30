@@ -23,6 +23,23 @@ public class Almacen implements ClienteAPI, AlmacenAPI, ProductorAPI {
     this.productos = new ArrayIndexedList<>();
   }
 
+  public int busquedaBinariaEnProductos(String productosid) {
+	  int izquierda=0;
+	  int derecha = productos.size()-1;
+	  while(izquierda<=derecha) {
+		  int medio = (izquierda+derecha)/2;
+		  int comparacion = productos.get(medio).getProductoId().compareTo(productosid);
+		  if(comparacion==0) {
+			  return medio;
+		  }else if(comparacion>0) {
+			  derecha=medio-1;
+		  }else {
+			  izquierda=medio+1;
+		  }
+	  }
+	   
+	  return izquierda;
+  }
 
   // Implementa los métodos necesarios aqui ...
 }

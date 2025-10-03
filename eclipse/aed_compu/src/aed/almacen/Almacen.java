@@ -40,6 +40,84 @@ public class Almacen implements ClienteAPI, AlmacenAPI, ProductorAPI {
 	   
 	  return izquierda;
   }
+  
+  @Override
+ public Producto getProducto(String productoId) {
+	 int esta=busquedaBinariaEnProductos(productoId);
+	 if(esta<productos.size()&&this.productos.get(esta).getProductoId().compareTo(productoId)==0) {
+		 return this.productos.get(esta);
+	 }else return null;
+ }
 
-  // Implementa los métodos necesarios aqui ...
+  @Override
+ public Compra getCompra(Integer compraId) {
+	 Compra compra=null;
+	 for(int i=0;i<this.compras.size();i++) {
+		 if(compraId.equals(compras.get(i).getCompraId())) {
+			 compra=compras.get(i);
+			 break;
+		 }
+	 }
+	 return compra;
+ }
+
+ @Override
+ public IndexedList<Producto> getProductos(){
+	return new ArrayIndexedList<Producto>(this.productos); //La nueva lista con los productos
+
+ }
+
+ @Override
+ public IndexedList<Compra> getCompras(){
+	 return new ArrayIndexedList<Compra>(this.compras);//la nueva lista con las compras contenidas
+ }
+
+ 
+ @Override
+ public IndexedList<Compra> comprasCliente(String clienteId){
+	 IndexedList<Compra> compra=new ArrayIndexedList<Compra>();
+	 for(int i=0;i<this.compras.size();i++) {
+		 if(compras.get(i).getClienteId().equals(clienteId)) {
+			 compra.add(compra.size(), compras.get(i));
+		 }
+	 }
+	 return compra;
+ }
+
+ @Override
+ public IndexedList<Compra> comprasProducto(String productoId){
+	 IndexedList<Compra> compra=new ArrayIndexedList<Compra>();
+	 for(int i=0;i<this.compras.size();i++) {
+		 if(compras.get(i).getProductoId().equals(productoId)) {
+			 compra.add(compra.size(), compras.get(i));
+		 }
+	 }
+	 return compra;
+ }
+ /**
+  * Un cliente identificado por clienteId realiza una compra
+  * de cantidad productos identificados por el productoId, si hay suficientes
+  * articulos disponibles.
+  * Devuelve la compraId de la compra (o null si no hay suficientes articulos disponibles).
+  * Debe cambiar (reducir) el numero de productos disponibles.
+  */
+ public Integer pedir(String clienteId, String productoId, int cantidad) {
+	 
+ }
+ /**
+  * Llega al almacen una cantidad de un producto (identificado por productoId)
+  * desde un productor.
+  * El metodo debe aumentar la disponibilidad de los productos en el almacen.
+  */
+ @Override
+ public void reabastecerProducto(String productoId, int cantidad) {
+	 int donde_esta=busquedaBinariaEnProductos(productoId);
+	 if(donde_esta<this.productos.size()&&this.productos.get(donde_esta).getProductoId().compareTo(productoId)==0) {
+		 this.productos.get(donde_esta).setCantidadDisponible(cantidad+this.productos.get(donde_esta).getCantidadDisponible());
+	 }else {
+		 Producto p=new Producto(productoId,cantidad);
+		 this.productos.add(donde_esta, p);
+	 }
+ }
+
 }

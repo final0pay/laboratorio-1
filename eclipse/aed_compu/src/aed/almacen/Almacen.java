@@ -104,11 +104,7 @@ public class Almacen implements ClienteAPI, AlmacenAPI, ProductorAPI {
  public Integer pedir(String clienteId, String productoId, int cantidad) {
 	 
  }
- /**
-  * Llega al almacen una cantidad de un producto (identificado por productoId)
-  * desde un productor.
-  * El metodo debe aumentar la disponibilidad de los productos en el almacen.
-  */
+ 
  @Override
  public void reabastecerProducto(String productoId, int cantidad) {
 	 int donde_esta=busquedaBinariaEnProductos(productoId);
